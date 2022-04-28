@@ -579,6 +579,16 @@ enum {
 	kSampleFormatTone = 3,
 };
 
+void xs_audioout_element_count(xsMachine *the)
+{
+	modAudioOut out = xsmcGetHostData(xsThis);
+	int streamIndex = xsmcArgc > 0 ? xsmcToInteger(xsArg(0)) : 0;
+	if ((streamIndex < 0) || (streamIndex >= out->streamCount))
+		xsRangeError("invalid stream");
+
+	xsmcSetInteger(xsResult, out->stream[streamIndex].elementCount);
+}
+
 void xs_audioout_enqueue(xsMachine *the)
 {
 	modAudioOut out = xsmcGetHostData(xsThis);

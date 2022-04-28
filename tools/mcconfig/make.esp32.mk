@@ -43,6 +43,41 @@ else
 	IDF_PY_LOG_FLAG = -n
 endif
 
+LIB_AQUESTALK = \
+	$(MODDABLE)/contributed/hello-aquestalk/AKR168.o \
+	$(MODDABLE)/contributed/hello-aquestalk/AKR169.o \
+	$(MODDABLE)/contributed/hello-aquestalk/AKR170.o \
+	$(MODDABLE)/contributed/hello-aquestalk/AKR171.o \
+	$(MODDABLE)/contributed/hello-aquestalk/AKR172.o \
+	$(MODDABLE)/contributed/hello-aquestalk/AKR173.o \
+	$(MODDABLE)/contributed/hello-aquestalk/AKR174.o \
+	$(MODDABLE)/contributed/hello-aquestalk/AKR175.o \
+	$(MODDABLE)/contributed/hello-aquestalk/AKR176.o \
+	$(MODDABLE)/contributed/hello-aquestalk/AKR177.o \
+	$(MODDABLE)/contributed/hello-aquestalk/AKR178.o \
+	$(MODDABLE)/contributed/hello-aquestalk/AKR179.o \
+	$(MODDABLE)/contributed/hello-aquestalk/AKR180.o \
+	$(MODDABLE)/contributed/hello-aquestalk/AKR181.o \
+	$(MODDABLE)/contributed/hello-aquestalk/AKR182.o \
+	$(MODDABLE)/contributed/hello-aquestalk/AKR183.o \
+	$(MODDABLE)/contributed/hello-aquestalk/AKR184.o \
+	$(MODDABLE)/contributed/hello-aquestalk/AKR185.o \
+	$(MODDABLE)/contributed/hello-aquestalk/AKR186.o \
+	$(MODDABLE)/contributed/hello-aquestalk/AKR187.o \
+	$(MODDABLE)/contributed/hello-aquestalk/AQR004.o \
+	$(MODDABLE)/contributed/hello-aquestalk/ATP192.o \
+	$(MODDABLE)/contributed/hello-aquestalk/ATP193.o \
+	$(MODDABLE)/contributed/hello-aquestalk/ATP194.o \
+	$(MODDABLE)/contributed/hello-aquestalk/ATP195.o \
+	$(MODDABLE)/contributed/hello-aquestalk/ATP196.o \
+	$(MODDABLE)/contributed/hello-aquestalk/ATP197.o \
+	$(MODDABLE)/contributed/hello-aquestalk/ATP198.o \
+	$(MODDABLE)/contributed/hello-aquestalk/ATP199.o \
+	$(MODDABLE)/contributed/hello-aquestalk/ATP200.o \
+	$(MODDABLE)/contributed/hello-aquestalk/ATP201.o \
+	$(MODDABLE)/contributed/hello-aquestalk/ATP202.o \
+	$(MODDABLE)/contributed/hello-aquestalk/ATP203.o
+
 PLATFORM_DIR = $(MODDABLE)/build/devices/esp32
 
 IDF_VERSION := $(shell bash -c "cd $(IDF_PATH) && git describe --always --abbrev=0")
@@ -433,6 +468,8 @@ $(BIN_DIR)/xs_$(ESP32_SUBCLASS).a: $(SDK_OBJ) $(XS_OBJ) $(TMP_DIR)/xsPlatform.c.
 	echo '_tBuildInfo _BuildInfo = {"$(BUILD_DATE)","$(BUILD_TIME)","$(SRC_GIT_VERSION)","$(ESP_GIT_VERSION)"};' >> $(TMP_DIR)/buildinfo.c
 	$(CC) $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) $(TMP_DIR)/buildinfo.c -o $(TMP_DIR)/buildinfo.c.o
 	$(AR) $(AR_FLAGS) $(BIN_DIR)/xs_$(ESP32_SUBCLASS).a $^ $(TMP_DIR)/buildinfo.c.o
+	@echo "# archive libaquestalk.a"
+	$(AR) rs $(BIN_DIR)/xs_esp32.a $(LIB_AQUESTALK)
 
 partitionsFileCheck:
 	if test -e $(PROJ_DIR)/partitions.csv ; then \
